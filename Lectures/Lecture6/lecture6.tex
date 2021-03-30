@@ -1,0 +1,174 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{cmap}					
+\usepackage[T2A]{fontenc}			
+\usepackage[utf8]{inputenc}			
+\usepackage[english,russian]{babel}	
+
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{defn}[theorem]{Определение}
+
+\title{Лекция 6}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Решение систем уравнений}%
+\label{sec:решение_систем_уравнений}
+
+\[
+    A: 0 < \lambda_{min} < \ldots < \lambda_{i} < \ldots < \lambda_{max}
+.\] 
+\[
+G = E - \tau A
+.\] 
+
+Рассмотрим следующую функцию $ \mid \mu (t)  \mid =  \mid 1 - \tau \lambda  \mid $,
+следовательно $\lambda \in [\lambda_{min}, \lambda_{max}]$.
+\[
+\ln \frac{1}{q} = v
+.\] 
+\[
+    q(\tau_{opt}) = \min_{\tau} \max_{\lambda}  \mid 1 - \tau \lambda  \mid 
+.\] 
+
+\[
+ \mid 1 - \tau_{opt} \lambda_{\min}  \mid =  \mid 1 - \tau_{opt} \lambda_{\max}  \mid 
+.\] 
+
+\[
+    1 - \tau_{opt} = - (1 - \tau_{opt} \lambda_{\max})
+.\] 
+
+Тогда итерационный параметр при котором достигается максимальная скорость будет:
+\[
+    \tau_{opt} = \frac{2}{\lambda_{\min}(A) + \lambda_{\max}(A)}
+.\] 
+
+\[
+    q(\tau_{opt}) =  \mid 1 - \tau_{opt}\lambda_{\min} \mid =  \mid 1 - \tau_{opt}\lambda_{\max} \mid   
+.\] 
+
+\[
+    q(\tau_{opt}) =  \mid 1 - \frac{2 \lambda_{\min}}{\lambda_{\min} + \lambda_{\max}} \mid = 
+     \mid \frac{\lambda_{\max} - \lambda_{\min}}{\lambda_{\max} + \lambda_{\min}} \mid 
+.\] 
+
+\[
+    n_0(\varepsilon) = [\frac{\ln \frac{1}{\varepsilon}}{\ln \frac{1}{q}}] + 1
+.\] 
+\[
+\ln \frac{1}{q} = \ln \frac{1 + \xi}{1 - \xi}
+.\] 
+
+\[
+    n_0 ( \varepsilon ) = [\frac{\ln \frac{1}{ \varepsilon }}{2 \xi }] + 1 ~ O(\frac{1}{ \xi  })
+.\] 
+
+\section{Итерационные методы вариационного типа}%
+\label{sec:итерационные_методы_вариационного_типа}
+
+Пусть у нас есть СЛАУ 
+\begin{equation}
+    A \vec{x} = \vec{f}
+\end{equation}
+
+\[
+    A \vec{x^{(*)}} = \vec{f}
+.\] 
+
+\begin{equation}
+    \Phi ( \vec{x} ) = (A \vec{x}, \vec{x}) - 2 ( \vec{f}, \vec{x} )
+\end{equation}
+
+Покажем, что $\nabla \Phi ( \vec{x}) = 0$ 
+\[
+ \frac{\partial \Phi}{\partial x_{i}}, i = 1,m 
+.\] 
+\[
+    \nabla \Phi ( \vec{x} ) = (A \vec{x}, \vec{x}) + (A \vec{x}, \vec{x}) = 2 \vec{f} =
+    (A \vec{x}, \vec{x}) + (A \vec{x}, \vec{x}) - 2 \vec{f} = 2 A \vec{x} - 2 \vec{f} = 
+    2 (A \vec{x^{(*)}}, \vec{x})
+.\] 
+
+Мы должны получить последовательность векторов, которая минимизирует нашу функицю: $\{ \vec{x^{(0)}},
+\vec{x^{(1)}}, \ldots, \vec{x^{(n)}}, \ldots\}$
+
+Подставим в уравнение произвольный вектор:
+\begin{equation}
+    A \vec{x^{(n)}} = \vec{f} = \vec{r^{(n)}}
+\end{equation}
+
+Будем искать последовательность векторов по следующей рекурентной формуле:
+\begin{equation}
+    \vec{x}^{(n + 1)} = \vec{x^{(n)}} + \tau_{n} \vec{r^{(n)}}
+\end{equation}
+
+Надо минимизировать функцию:
+\[
+    \Phi ( \vec{x}^{(n + 1)} = \Phi ( \vec{x}^{(n)} - \tau_{n} \vec{r}^{(n)} = 
+    g( \tau_{n} ) \to \min_{ \tau_{n} }  
+.\] 
+
+\[
+    \frac{d q ( \tau_{n} )}{d \tau_{n}} = \sum_{i = 1}^{m} \frac{\partial
+    \Phi ( \vec{x}^{(n + 1)} )}{\partial x_{i}^{(n + 1)}}
+.\] 
+Умножим формулу 4 слева на матрицу A.
+\[
+    A \vec{x}^{(n + 1)} = \vec{x}^{(n)} - \tau_{n} A \vec{r}^{(n)}
+.\] 
+\[
+    A \vec{x}^{(n + 1)} - \vec{f} = A \vec{x}^{(n)} - \vec{f} - \tau_{n} A \vec{r}^{(n)}
+.\] 
+
+\[
+    ( \vec{r}^{(n + 1)}, \vec{r}^{(n)} ) = ( \vec{r}^{(n)}, \vec{r}^{n} ) - \tau_{n}
+    (A \vec{r}^{(n)}, \vec{r}^{(n)} )
+.\] 
+
+\[
+    \tau_{n} = \frac{( \vec{r}^{(n)}, \vec{r}^{(n)} )}{(A \vec{r}^{(n)}, \vec{r}^{(n)})}
+.\] 
+
+\section{Алгоритм метода наискорейшего спуска}%
+\label{sec:алгоритм_метода_наискорейшего_спуска}
+
+\begin{enumerate}
+    \item Задаем n = 0, $ \vec{x}^{(0)}$ - задаем. Вычисляем 
+        $ \vec{r}^{(0)} = A \vec{x}^{(0)} - \vec{f}$ 
+    \item находим $\tau_{n} = \frac{ (\vec{r}^{(n)} , \vec{r}^{(n)} )}{(A \vec{r}^{(n)}, \vec{r}^{(n)})}$ 
+    \item $ \vec{x}^{(n + 1)} = \vec{x}^{(n)} - \tau_{n} \vec{r}^{(n)}$ 
+    \item $n = n + 1$, goto 2)
+\end{enumerate}
+
+Посмотрим, что собой представляет формула 4.
+\[
+    \frac{ \vec{x}^{(n + 1)} - \vec{x}^{(n)} }{\tau_{n}} = \vec{r}^{(n)}
+.\] 
+\[
+   E \frac{ \vec{x}^{(n + 1)} - \vec{x}^{(n)} }{ \tau_{n} } + A \vec{x}^{(n)} = \vec{f}
+.\] 
+
+Скорость сходимости наискорейшего спуска примерно совпадает со скоростью сходимости метода
+простой итерации с выбором оптимального параметра. Но в методе простой итерации искать
+собственный числа на компьютере не так просто, а здесь мы не ищем никаких собственных чисел.
+В этом преимущество этого метода
+
+\section{Метод сопряженных градиентов}%
+\label{sec:метод_сопряженных_градиентов}
+
+\begin{defn}
+Векторы $ \vec{x}, \vec{y}$ называются сопряженными по отношению к матрице A или А-сопряженными,
+если $( A \vec{x}, \vec{y}) = ( \vec{x}, A \vec{y} ) = 0$
+\end{defn}
+
+\end{document}
+
